@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
 ///
 /// File: ArchiItem.cs
-/// Revision: 1
+/// Revision: 2
 /// Author: JRoeseph
 /// Description: A general `ArchiItem` class that handles the collection and 
 ///     tracking of items to be recieved by the Archipelago server. Each type 
@@ -28,7 +28,7 @@ public struct ArchiItemItem : ArchiItem
 
     public void Collect()
     {
-        TheGame.Instance._Item_PickUp(Type, TheGame.Instance.xLocalPlayer, Amount, bSend: false);
+        Grindapelago.Game._Item_PickUp(Type, Grindapelago.Game.xLocalPlayer, Amount, bSend: false);
     }
 }
 
@@ -42,7 +42,7 @@ public struct ArchiItemGold : ArchiItem
 
     public void Collect()
     {
-        TheGame.Instance._Money_AddToView(TheGame.Instance.xLocalPlayer, Amount);
+        Grindapelago.Game._Money_AddToView(Grindapelago.Game.xLocalPlayer, Amount);
     }
 }
 
@@ -56,7 +56,7 @@ public struct ArchiItemXP : ArchiItem
 
     public void Collect()
     {
-        TheGame.Instance._Player_GrantEXPToPlayer(TheGame.Instance.xLocalPlayer, Level, EnemyDescription.Category.Boss);
+        Grindapelago.Game._Player_GrantEXPToPlayer(Grindapelago.Game.xLocalPlayer, Level, EnemyDescription.Category.Boss);
     }
 }
 
@@ -72,7 +72,7 @@ public struct ArchiItemPoint : ArchiItem
 
     public void Collect()
     {
-        PlayerView xView = TheGame.Instance.xLocalPlayer;
+        PlayerView xView = Grindapelago.Game.xLocalPlayer;
         if (Type == Quests.SkillPointReward.SkillPointType.Talent)
         {
             xView.xViewStats.iTalentPoints += Amount;
@@ -98,7 +98,7 @@ public struct ArchiItemCard : ArchiItem
 
     public void Collect()
     {
-        PlayerView xView = TheGame.Instance.xLocalPlayer;
+        PlayerView xView = Grindapelago.Game.xLocalPlayer;
         xView.xJournalInfo.henCardAlbum.Add(Type, false);
     }
 }

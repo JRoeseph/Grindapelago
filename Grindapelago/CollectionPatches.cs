@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
 ///
 /// File: Collection Patches.cs
-/// Revision: 1
+/// Revision: 2
 /// Author: JRoeseph
 /// Description: The patches that detect when certain locations are checked,
 ///     sending them via `ArchiConnector.cs`, and tracking them via 
@@ -21,9 +21,9 @@ public static class EventPatch
     {
         string LocationDiscovered;
         if (LocationDictionaries.EventDictionary.TryGetValue(enFlagID, out LocationDiscovered) 
-                && TheGame.CheckedLocations[LocationDiscovered])
+                && !Grindapelago.CheckedLocations[LocationDiscovered])
         {
-            TheGame.CheckedLocations[LocationDiscovered] = true;
+            Grindapelago.CheckedLocations[LocationDiscovered] = true;
 
             // Make sure this event isn't called again
             __instance.xGameSessionData.henActiveFlags.Add(enFlagID);
@@ -74,9 +74,9 @@ public static class DialoguePatch
         
         string LocationDiscovered;
         if (LocationDictionaries.DialogueDictionary.TryGetValue(CurrentLine.sUnparsedBaseLine, out LocationDiscovered)
-                && TheGame.CheckedLocations[LocationDiscovered])
+                && !Grindapelago.CheckedLocations[LocationDiscovered])
         {
-            TheGame.CheckedLocations[LocationDiscovered] = true;
+            Grindapelago.CheckedLocations[LocationDiscovered] = true;
 
             // Remove original item from dialogue
             foreach (string PreScript in CurrentLine.lsPreScripts)
@@ -110,9 +110,9 @@ public static class CutscenePatch
 
         string LocationDiscovered;
         if (LocationDictionaries.CutsceneDictionary.TryGetValue(__instance.xActiveCutscene.enID, out LocationDiscovered)
-                && TheGame.CheckedLocations[LocationDiscovered])
+                && !Grindapelago.CheckedLocations[LocationDiscovered])
         {
-            TheGame.CheckedLocations[LocationDiscovered] = true;
+            Grindapelago.CheckedLocations[LocationDiscovered] = true;
 
             // Remove original item
             __instance.xActiveCutscene.lenItemGrantOnSkip.Clear();
@@ -141,9 +141,9 @@ public static class BasicChestPatch
 
         string LocationDiscovered;
         if (LocationDictionaries.BasicChestDictionary.TryGetValue(__instance.iID, out LocationDiscovered)
-                && TheGame.CheckedLocations[LocationDiscovered])
+                && !Grindapelago.CheckedLocations[LocationDiscovered])
         {
-            TheGame.CheckedLocations[LocationDiscovered] = true;
+            Grindapelago.CheckedLocations[LocationDiscovered] = true;
             // Make sure this stops getting called
             __instance.iOpenDelayLol = 0;
 
@@ -170,7 +170,7 @@ public static class QuestPatch
         // Renderer (???) so we have to do some jank to inject here. Lot's of null
         // checking because there are a lot of null elements only non-null when in 
         // use, and we only want to overhaul them while in use
-        GUIStuff xGuiStuff = TheGame.Instance?.xLocalPlayer?.xGUIStuff;
+        GUIStuff xGuiStuff = Grindapelago.Game?.xLocalPlayer?.xGUIStuff;
         if (xGuiStuff == null || xGuiStuff.iQuestCompletedCounter == 0 ||
             xGuiStuff?.xThisQuestInstance?.enQuestID == null || xGuiStuff.xThisQuestDescription.xReward.bAwardGotLol)
         {
@@ -179,9 +179,9 @@ public static class QuestPatch
 
         string LocationDiscovered;
         if (LocationDictionaries.QuestDictionary.TryGetValue(xGuiStuff.xThisQuestInstance.enQuestID, out LocationDiscovered)
-                && TheGame.CheckedLocations[LocationDiscovered])
+                && !Grindapelago.CheckedLocations[LocationDiscovered])
         {
-            TheGame.CheckedLocations[LocationDiscovered] = true;
+            Grindapelago.CheckedLocations[LocationDiscovered] = true;
             // Telling the game we've already received the reward to not grant another
             xGuiStuff.xThisQuestDescription.xReward.bAwardGotLol = true;
 
@@ -203,12 +203,12 @@ public static class CardPatch
     {
         string LocationDiscovered;
         if (LocationDictionaries.CardDictionary.TryGetValue(enEnemyType, out LocationDiscovered)
-                && TheGame.CheckedLocations[LocationDiscovered])
+                && !Grindapelago.CheckedLocations[LocationDiscovered])
         {
-            TheGame.CheckedLocations[LocationDiscovered] = true;
+            Grindapelago.CheckedLocations[LocationDiscovered] = true;
 
             //DEBUG/TESTING CODE START
-            ArchiConnector.GetVanillaItem(LocationDiscovered);
+            //ArchiConnector.GetVanillaItem(LocationDiscovered);
             //DEBUG/TESTING CODE END
 
             // We do not want the player to actually get the card
