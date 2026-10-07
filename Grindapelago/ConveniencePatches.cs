@@ -52,3 +52,35 @@ public static class CardChancePatch
         return codeMatcher.Instructions();
     }
 }
+
+[HarmonyPatch(typeof(Game1))]
+[HarmonyPatch(nameof(Game1._Item_UpdatePostFall))]
+public static class PickupRangePatch
+{
+    public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
+    {
+        if (!Grindapelago.InfinitePickupRange)
+        {
+            return instructions;
+        }
+
+        CodeMatcher codeMatcher = new CodeMatcher(instructions);
+
+        codeMatcher.MatchStartForward(new CodeMatch(OpCodes.Ldc_R4, (float)35));
+
+        if (codeMatcher.IsInvalid)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Out.WriteLine("[PickupRangePatch] Transpiler Error: Failed to locate proper instructions");
+            Console.ResetColor();
+
+            return instructions;
+        }
+
+        codeMatcher.SetAndAdvance(OpCodes.Ldc_R4, (float)420)
+            .Advance()
+            .Set(OpCodes.Ldc_R4, (float)20);
+
+        return codeMatcher.Instructions();
+    }
+}

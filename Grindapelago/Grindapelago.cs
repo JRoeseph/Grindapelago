@@ -18,6 +18,7 @@ public static class Grindapelago
     public static Game1 Game = null;
     public static int CardKillsPerKill = 10;
     public static int LootMultiplier = 5;
+    public static bool InfinitePickupRange = true;
     public static void Init()
     {
         var harmony = new Harmony("com.jroeseph.grindapelago");
