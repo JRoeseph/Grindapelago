@@ -31,6 +31,8 @@ public static class Grindapelago
         { "Mrs Wourie", false },
         { "Grandpa Joe - Intro", false },
         { "Luke - After Collector's Exam", false },
+        { "Robin - First Bow", false },
+        { "Robin - 10K Points", false },
         //Cutscene Checks
         { "Collector's Exam Completed", false },
         //Chest Checks
@@ -41,6 +43,7 @@ public static class Grindapelago
         { "Left Arena Waiting Room Chest", false },
         { "Center Arena Waiting Room Chest", false },
         { "Right Arena Waiting Room Chest", false },
+        { "Southern Fields West Chest", false },
         //Quest Checks
         { "Road to the City", false },
         { "The Collector's Exam", false },

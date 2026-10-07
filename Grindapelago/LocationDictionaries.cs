@@ -21,7 +21,9 @@ public static class LocationDictionaries
 
     public static Dictionary<string, string> DialogueDictionary = new Dictionary<string, string>()
         {
-            { "{c=goodnews}Congratulations!{/} You got your {c=item}sword{/} back!", "Mrs Wourie" }
+            { "{c=goodnews}Congratulations!{/} You got your {c=item}sword{/} back!", "Mrs Wourie" },
+            { "Then you should know that no adventure is complete without a bow! Here, take this.", "Robin - First Bow" },
+            { "Woah?! [BOWSCORE] points?! That's amazing. Here, take this!", "Robin - 10K Points" },
         };
 
     public static Dictionary<CutsceneLibrary.CutsceneID, string> CutsceneDictionary = new Dictionary<CutsceneLibrary.CutsceneID, string>()
@@ -30,14 +32,15 @@ public static class LocationDictionaries
             { CutsceneLibrary.CutsceneID._MainStory_Trials_YouAreCollector, "Collector's Exam Completed"},
         };
 
-    public static Dictionary<ushort, string> BasicChestDictionary = new Dictionary<ushort, string>()
+    public static Dictionary<FlagCodex.FlagID, string> BasicChestDictionary = new Dictionary<FlagCodex.FlagID, string>()
         {
-            {  0, "Center Arena Waiting Room Chest"},
-            {  1, "Left Arena Waiting Room Chest"},
-            {  2, "Right Arena Waiting Room Chest"},
-            { 25, "Lower Pillar Mountains Chest"},
-            { 42, "Upper Pillar Mountains Chest"},
-            { 99, "Middle Pillar Mountains Cave Chest"},
+            { FlagCodex.FlagID._Chest_00011_ClaymoreInWaitingRoom, "Center Arena Waiting Room Chest"},
+            { FlagCodex.FlagID._Chest_00010_IronSwordInWaitingRoom, "Left Arena Waiting Room Chest"},
+            { FlagCodex.FlagID._Chest_00004_Staff, "Right Arena Waiting Room Chest"},
+            { FlagCodex.FlagID._Chest_00005_PillarMountainBot, "Lower Pillar Mountains Chest"},
+            { FlagCodex.FlagID._Chest_00003_ToyWand, "Upper Pillar Mountains Chest"},
+            { FlagCodex.FlagID._Chest_00013_SouthFieldsWestChest, "Southern Fields West Chest"},
+            { FlagCodex.FlagID._Chest_00002_Socks, "Middle Pillar Mountains Cave Chest"},
         };
 
     public static Dictionary<QuestCodex.QuestID, string> QuestDictionary = new Dictionary<QuestCodex.QuestID, string>()
@@ -98,6 +101,8 @@ public static class LocationDictionaries
             { "Mrs Wourie", new ArchiItemItem(ItemCodex.ItemTypes._OneHanded_WoodenSword, 1) },
             { "Grandpa Joe - Intro", new ArchiItemItem(ItemCodex.ItemTypes._TwoHanded_Stick, 1) },
             { "Luke - After Collector's Exam" , new ArchiItemItem(ItemCodex.ItemTypes._Misc_SlimeCube, 1) },
+            { "Robin - First Bow" , new ArchiItemItem(ItemCodex.ItemTypes._Bow_WoodenBow, 1) },
+            { "Robin - 10K Points" , new ArchiItemItem(ItemCodex.ItemTypes._KeyItem_Quiver, 1) },
             //Cutscene Checks
             { "Collector's Exam Completed", new ArchiItemItem(ItemCodex.ItemTypes._Hat_Strawboater, 1) },
             //Chest Checks
@@ -108,6 +113,7 @@ public static class LocationDictionaries
             { "Left Arena Waiting Room Chest", new ArchiItemItem(ItemCodex.ItemTypes._OneHanded_IronSword, 1) },
             { "Center Arena Waiting Room Chest", new ArchiItemItem(ItemCodex.ItemTypes._TwoHanded_Claymore, 1) },
             { "Right Arena Waiting Room Chest", new ArchiItemItem(ItemCodex.ItemTypes._TwoHanded_Staff, 1) },
+            { "Southern Fields West Chest", new ArchiItemItem(ItemCodex.ItemTypes._Armor_AdventureShirt, 1) },
             //Quest Checks
             { "Road to the City", new ArchiItemXP(4) },
             { "The Collector's Exam", new ArchiItemPoint(SkillPointReward.SkillPointType.Talent, 1) },

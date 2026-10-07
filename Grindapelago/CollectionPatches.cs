@@ -87,6 +87,14 @@ public static class DialoguePatch
                     break;
                 }
             }
+            foreach (string PostScripts in CurrentLine.lsPostScripts)
+            {
+                if (PostScripts.StartsWith("GiveItem"))
+                {
+                    CurrentLine.lsPostScripts.Remove(PostScripts);
+                    break;
+                }
+            }
 
             //DEBUG/TESTING CODE START
             ArchiConnector.GetVanillaItem(LocationDiscovered);
@@ -140,7 +148,7 @@ public static class BasicChestPatch
         }
 
         string LocationDiscovered;
-        if (LocationDictionaries.BasicChestDictionary.TryGetValue(__instance.iID, out LocationDiscovered)
+        if (LocationDictionaries.BasicChestDictionary.TryGetValue(__instance.enFlagID, out LocationDiscovered)
                 && !Grindapelago.CheckedLocations[LocationDiscovered])
         {
             Grindapelago.CheckedLocations[LocationDiscovered] = true;
@@ -208,7 +216,7 @@ public static class CardPatch
             Grindapelago.CheckedLocations[LocationDiscovered] = true;
 
             //DEBUG/TESTING CODE START
-            //ArchiConnector.GetVanillaItem(LocationDiscovered);
+            ArchiConnector.GetVanillaItem(LocationDiscovered);
             //DEBUG/TESTING CODE END
 
             // We do not want the player to actually get the card
