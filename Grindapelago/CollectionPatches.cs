@@ -106,7 +106,9 @@ public static class CutscenePatch
 {
     static bool Prefix(CutsceneControl __instance)
     {
-        if (__instance?.xActiveCutscene == null)
+        // We have to check for the teleport plate here because for some reason, that cutscene shares an ID with Grandpa Joe.
+        // It may be worth looking into checking the item instead of the ID. 
+        if (__instance?.xActiveCutscene == null || __instance.xActiveCutscene.lenItemGrantOnSkip.Contains(ItemCodex.ItemTypes._Special_TeleportPlate))
         {
             return true;
         }
@@ -198,6 +200,11 @@ public static class CardPatch
 {
     public static bool Prefix(Game1 __instance, ref EnemyCodex.EnemyTypes enEnemyType, ref bool bAllowMoreThanOne)
     {
+        if (ArchiItemCard.ActiveManualCards.Contains(enEnemyType))
+        {
+            ArchiItemCard.ActiveManualCards.Remove(enEnemyType);
+            return true;
+        }
         string LocationDiscovered;
         if (LocationDictionaries.CardDictionary.TryGetValue(enEnemyType, out LocationDiscovered)
                 && !Grindapelago.CheckedLocations[LocationDiscovered])

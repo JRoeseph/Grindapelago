@@ -39,9 +39,7 @@ public static class CardChancePatch
 
         if (codeMatcher.IsInvalid)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Out.WriteLine("[CardChancePatch] Transpiler Error: Failed to locate proper instructions");
-            Console.ResetColor();
+            Logger.Log("[CardChancePatch] Transpiler Error: Failed to locate instructions for card chance buffing", LoggerVerbosity.Error);
 
             return instructions;
         }
@@ -69,7 +67,7 @@ public static class PickupRangePatch
 
         if (codeMatcher.IsInvalid)
         {
-            Logger.Log("[PickupRangePatch] Transpiler Error: Failed to locate proper instructions", LoggerVerbosity.Error);
+            Logger.Log("[PickupRangePatch] Transpiler Error: Failed to locate instructions for pickup range patch", LoggerVerbosity.Error);
 
             return instructions;
         }

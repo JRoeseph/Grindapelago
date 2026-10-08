@@ -10,13 +10,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 using HarmonyLib;
 using SoG;
-using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 
 public static class InjectedIntegrityFunctions
 {
-    public static bool CheckCardLocation(bool bCardRoll, Enemy xEnemy)
+    public static bool DisableDupeLoc(bool bCardRoll, Enemy xEnemy)
     {
         
         if (!bCardRoll)
@@ -35,6 +34,15 @@ public static class InjectedIntegrityFunctions
 
         return true;
     }
+
+    public static List<PlayerView> EnableDupeItem(List<PlayerView> lxEligibleViews, Enemy xEnemy)
+    {
+        if (!lxEligibleViews.Contains(Grindapelago.Game.xLocalPlayer))
+        {
+            lxEligibleViews.Add(Grindapelago.Game.xLocalPlayer);
+        }
+        return lxEligibleViews;
+    }
 }
 
 [HarmonyPatch(typeof(Game1))]
@@ -45,19 +53,37 @@ public static class CardDupePatch
     {
         CodeMatcher codeMatcher = new CodeMatcher(instructions);
 
+        // Patch to stop dropping cards when location is checked, even when card is not collected
         codeMatcher.MatchStartForward(new CodeMatch(OpCodes.Ldstr, "GuaranteeCards"))
             .MatchEndBackwards(new CodeMatch(OpCodes.Clt));
 
         if (codeMatcher.IsInvalid)
         {
-            Logger.Log("[CardDupePatch] Transpiler Error: Failed to locate proper instructions", LoggerVerbosity.Error);
+            Logger.Log("[CardDupePatch] Transpiler Error: Failed to locate instructions for disabling cards when checked", LoggerVerbosity.Error);
 
             return instructions;
         }
             
+        codeMatcher.InsertAfterAndAdvance(new CodeInstruction(OpCodes.Ldarg_1))
+            .InsertAfterAndAdvance(new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(InjectedIntegrityFunctions),nameof(InjectedIntegrityFunctions.DisableDupeLoc))));
+
+        // Patch to keep dropping cards when location is not checked, even when card is collected
+        codeMatcher.MatchStartForward(
+            new CodeMatch(instruction => instruction.opcode == OpCodes.Ldloc_S
+                            && instruction.operand is LocalBuilder builder
+                            && builder.LocalIndex == 94),
+            new CodeMatch(OpCodes.Callvirt),
+            new CodeMatch(OpCodes.Ldc_I4_0));
+
+        if (codeMatcher.IsInvalid)
+        {
+            Logger.Log("[CardDupePatch] Transpiler Error: Failed to locate instructions for enabling cards while in deck", LoggerVerbosity.Error);
+
+            return instructions;
+        }
         
         codeMatcher.InsertAfterAndAdvance(new CodeInstruction(OpCodes.Ldarg_1))
-            .InsertAfterAndAdvance(new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(InjectedIntegrityFunctions),nameof(InjectedIntegrityFunctions.CheckCardLocation))));
+            .InsertAfterAndAdvance(new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(InjectedIntegrityFunctions), nameof(InjectedIntegrityFunctions.EnableDupeItem))));
 
         return codeMatcher.Instructions();
     }

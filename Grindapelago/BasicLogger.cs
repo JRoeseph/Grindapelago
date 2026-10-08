@@ -37,7 +37,12 @@ public static class Logger
     {
         if (Grindapelago.ChatVerbosity >= Verbosity)
         {
-            CAS.AddChatMessage(Message);
+            try
+            {
+                CAS.AddChatMessage(Message);
+            }
+            // Logs that are called BEFORE the game starts throw errors here, so just ignore them
+            catch{}
         }
         if (Grindapelago.ConsoleVerbosity >= Verbosity)
         {

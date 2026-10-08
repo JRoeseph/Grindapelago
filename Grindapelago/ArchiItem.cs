@@ -9,6 +9,7 @@
 /// 
 ///////////////////////////////////////////////////////////////////////////////
 using SoG;
+using System.Collections.Generic;
 
 public interface ArchiItem
 {
@@ -92,6 +93,7 @@ public struct ArchiItemPoint : ArchiItem
 public struct ArchiItemCard : ArchiItem
 {
     public EnemyCodex.EnemyTypes Type;
+    public static List<EnemyCodex.EnemyTypes> ActiveManualCards = new List<EnemyCodex.EnemyTypes>();
     public ArchiItemCard(EnemyCodex.EnemyTypes inType)
     {
         Type = inType;
@@ -100,6 +102,7 @@ public struct ArchiItemCard : ArchiItem
     public void Collect()
     {
         PlayerView xView = Grindapelago.Game.xLocalPlayer;
+        ActiveManualCards.Add(Type);
         xView.xJournalInfo.henCardAlbum.Add(Type, false);
     }
 }

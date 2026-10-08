@@ -29,9 +29,9 @@ public static class Grindapelago
 
     public static void Init()
     {
+        Logger.Init();
         var harmony = new Harmony("com.jroeseph.grindapelago");
         harmony.PatchAll(typeof(Grindapelago).Assembly);
-        Logger.Init();
     }
 
     public static void GetVanillaItem(string LocationDiscovered)
