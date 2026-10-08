@@ -1,7 +1,6 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
 ///
 /// File: ConveniencePatches.cs
-/// Revision: 1
 /// Author: JRoeseph
 /// Description: The patches to SoG that modify the game to make it easier for
 ///     an Archipelago player like increasing pickup distance or increasing
@@ -70,9 +69,7 @@ public static class PickupRangePatch
 
         if (codeMatcher.IsInvalid)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Out.WriteLine("[PickupRangePatch] Transpiler Error: Failed to locate proper instructions");
-            Console.ResetColor();
+            Logger.Log("[PickupRangePatch] Transpiler Error: Failed to locate proper instructions", LoggerVerbosity.Error);
 
             return instructions;
         }

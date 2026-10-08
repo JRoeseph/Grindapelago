@@ -1,7 +1,6 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
 ///
 /// File: IntegrityPatches.cs
-/// Revision: 2
 /// Author: JRoeseph
 /// Description: The patches to SoG that handle maintaining game integrity
 ///     between checked locations and the lack of items/events received from
@@ -51,9 +50,7 @@ public static class CardDupePatch
 
         if (codeMatcher.IsInvalid)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Out.WriteLine("[CardDupePatch] Transpiler Error: Failed to locate proper instructions");
-            Console.ResetColor();
+            Logger.Log("[CardDupePatch] Transpiler Error: Failed to locate proper instructions", LoggerVerbosity.Error);
 
             return instructions;
         }

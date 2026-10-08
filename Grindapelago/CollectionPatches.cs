@@ -1,7 +1,6 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
 ///
-/// File: Collection Patches.cs
-/// Revision: 2
+/// File: CollectionPatches.cs
 /// Author: JRoeseph
 /// Description: The patches that detect when certain locations are checked,
 ///     sending them via `ArchiConnector.cs`, and tracking them via 
@@ -35,9 +34,7 @@ public static class EventPatch
                 __instance._NPC_CheckForQuests();
             }
 
-            //DEBUG/TESTING CODE START
-            ArchiConnector.GetVanillaItem(LocationDiscovered);
-            //DEBUG/TESTING CODE END
+            ArchiConnector.CheckLocation(LocationDiscovered);
 
             // We handled the event manually, do not run the normal function
             return false;
@@ -96,9 +93,7 @@ public static class DialoguePatch
                 }
             }
 
-            //DEBUG/TESTING CODE START
-            ArchiConnector.GetVanillaItem(LocationDiscovered);
-            //DEBUG/TESTING CODE END
+            ArchiConnector.CheckLocation(LocationDiscovered);
         }
 
         return true;
@@ -125,9 +120,7 @@ public static class CutscenePatch
             // Remove original item
             __instance.xActiveCutscene.lenItemGrantOnSkip.Clear();
 
-            //DEBUG/TESTING CODE START
-            ArchiConnector.GetVanillaItem(LocationDiscovered);
-            //DEBUG/TESTING CODE END
+            ArchiConnector.CheckLocation(LocationDiscovered);
         }
 
         return true;
@@ -155,9 +148,7 @@ public static class BasicChestPatch
             // Make sure this stops getting called
             __instance.iOpenDelayLol = 0;
 
-            //DEBUG/TESTING CODE START
-            ArchiConnector.GetVanillaItem(LocationDiscovered);
-            //DEBUG/TESTING CODE END
+            ArchiConnector.CheckLocation(LocationDiscovered);
 
             // We don't want the chest still giving the item
             return false;
@@ -193,9 +184,7 @@ public static class QuestPatch
             // Telling the game we've already received the reward to not grant another
             xGuiStuff.xThisQuestDescription.xReward.bAwardGotLol = true;
 
-            //DEBUG/TESTING CODE START
-            ArchiConnector.GetVanillaItem(LocationDiscovered);
-            //DEBUG/TESTING CODE END
+            ArchiConnector.CheckLocation(LocationDiscovered);
         }
 
 
@@ -215,9 +204,7 @@ public static class CardPatch
         {
             Grindapelago.CheckedLocations[LocationDiscovered] = true;
 
-            //DEBUG/TESTING CODE START
-            ArchiConnector.GetVanillaItem(LocationDiscovered);
-            //DEBUG/TESTING CODE END
+            ArchiConnector.CheckLocation(LocationDiscovered);
 
             // We do not want the player to actually get the card
             return false;

@@ -1,7 +1,6 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
 ///
 /// File: ArchiItem.cs
-/// Revision: 2
 /// Author: JRoeseph
 /// Description: A general `ArchiItem` class that handles the collection and 
 ///     tracking of items to be recieved by the Archipelago server. Each type 
@@ -49,14 +48,16 @@ public struct ArchiItemGold : ArchiItem
 public struct ArchiItemXP : ArchiItem
 {
     public int Level;
-    public ArchiItemXP(int inLevel)
+    public EnemyDescription.Category Category;
+    public ArchiItemXP(int inLevel, EnemyDescription.Category inCategory)
     {
         Level = inLevel;
+        Category = inCategory;
     }
 
     public void Collect()
     {
-        Grindapelago.Game._Player_GrantEXPToPlayer(Grindapelago.Game.xLocalPlayer, Level, EnemyDescription.Category.Boss);
+        Grindapelago.Game._Player_GrantEXPToPlayer(Grindapelago.Game.xLocalPlayer, Level, Category);
     }
 }
 
